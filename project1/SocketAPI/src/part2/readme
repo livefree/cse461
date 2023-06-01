@@ -1,0 +1,41 @@
+Name: Runfeng Liu netid: runfengl(2050208)
+
+Socket API part2
+
+Instructions:
+
+To compile and run your Server.java, follow these instructions. First, open two terminal windows or command prompts. Then, follow these steps for each terminal window:
+
+Terminal Window 1 (Server):
+
+1. Change the directory to the folder part2 containing your Server.java file and compile the Server.java file using the following command:
+javac Server.java Header.java Packet.java
+
+2. Run the compiled Server class:
+java Server
+
+Terminal Window 2 (Client):
+1. Change the directory to the folder part2 containing your Client.java file and compile the Server.java file using the following command:
+javac Client.java Header.java Packet.java
+
+2. Run the compiled Server class:
+java Client
+
+By default, your Client and Server are set up to run locally using the address localhost (127.0.0.1). To allow the server to run remotely, you can modify the Server and Client classes to use a different IP address and port number.
+
+Server:
+
+1. In the Server.java file, find the line where the DatagramSocket is created:
+	DatagramSocket UDPSocket = new DatagramSocket(PORT);
+	
+2. Replace PORT with the desired port number, for example, 12345
+
+Client:
+
+1. In the Client.java file, find the line where the server host String is created:
+	String serverHost = "localhost";
+
+2. Replace "localhost" with the desired IP address of the remote server, for example, "attu2.cs.washington.edu".
+
+After making these changes, recompile and run your Client and Server classes as described earlier. The server will now listen on the specified IP address and port, and the client will connect to the server using the updated address and port.
+When you type "shutdown" in the console, the server should shut down promptly. Forcefully close a server application (for example, by killing the process) may not have enough time to properly release resources such as the sockets and ports it was using. This situation can lead to a "port bind issue" or a "java.net.BindException: Address already in use" error when you try to restart the server quickly after a forceful shutdown.

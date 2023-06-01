@@ -1,0 +1,26 @@
+Name: Runfeng Liu netid: runfengl(2050208)
+
+Socket API part1
+
+JDK: openjdk-19 Oracle OpenJDK version 19.0.1
+
+Secrets:
+Here are one set of secret sequence
+41, 21, 162, 33
+
+Instructions:
+
+To compile and run your Client.java, follow these instructions. Follow these steps for each terminal window:
+
+1. Change the directory to the folder part1 containing your Client.java file and compile the Server.java file using the following command:
+javac Client.java Header.java Packet.java
+
+2. Run the compiled Server class:
+java Client
+
+By default, Client are set up to connect to the address "attu3.cs.washington.edu" (128.208.1.139) on port 12235. You can modify the Client classes to use a different server address and port number.
+
+1. In the Client.java file, find the line where the server host String is created:
+	String serverHost = "attu2.cs.washington.edu";
+	
+2. Replace "attu2.cs.washington.edu" with the other address of the remote server, "attu3.cs.washington.edu".
