@@ -1,0 +1,37 @@
+Name: Runfeng Liu
+UWNetID: 2050208
+
+
+Instructions to reproduce the results:
+  
+
+Answers to the questions:
+Part 2
+  1. q=20:  avg = 0.534; stdev = 0.461
+     q=100: avg = 0.903; stdev = 0.109
+     
+  2.
+    For q=20: The smaller queue size combined with the lower bottleneck bandwidth means that the buffer can quickly become full and start dropping packets, leading to retransmissions. This contributes to higher variability in fetch times (higher standard deviation) as packet delivery becomes unpredictable due to packet loss and retransmissions. The lower average fetch time could be due to less time spent in the buffer before being sent out, which reduces overall delay, despite the occasional retransmissions.
+    For q=100: The larger buffer size allows for more packets to be held during periods of high demand. However, due to the lower bottleneck bandwidth, these packets stay in the buffer for longer periods before they can be sent out, leading to increased delay (thus longer average fetch time). However, the larger buffer size can absorb more traffic bursts, which makes packet delivery more predictable and thus leads to a lower standard deviation in fetch times.
+    
+  3.  
+    The (maximum) transmit queue length is 1000. With 1500 byte MTU, we can calculate the buffer size is 1000 frames * 1500 bytes/frame. If the queue drains at 100Mb/s, the max time a packet might in the queue is:
+  Time = (1000 * 1500)bytes * 8 / (100*10^6 ) = 0.12 s
+  
+  4. 
+    Ping with Small Queue Size: When the queue size is small, packets tend to get dropped more frequently once the buffer is full. While this could lead to less throughput, it often results in lower RTT as there are fewer packets in the queue waiting to be transmitted.
+    Ping with Large Queue Size: With a large queue size, the router or switch can buffer more packets. This can prevent packet loss, and TCP will continue to send data at a high rate. However, this means that more packets will be in the buffer waiting to be transmitted, which significantly increases the RTT. 
+    
+  5. 
+    One way to deal with bufferbloat is active queue management. Let switch warns sender before congestion by sending explicit congistion notification. The other way is using BBR since it doesn't rely on pakcet lost but estimates the current available network bandwidth and round-trip propagation time. This approach allows BBR to respond to actual congestion rather than relying on buffers' state.
+    
+Part 3
+  1. q=20:  avg = 0.253; stdev = 0.259
+     q=100: avg = 0.277; stdev = 0.291
+     
+  2. Fetch time for both scenario are quite close. Compared to results from part 2. Under TCP BBR congestion control, queue size doesn't affect the fetch time. And the overall performance is better than TCP RENO with less average time.
+  
+  3. Yes. The queue size graphs from part 2 and part 3 are very different. In part 2, the graphs show the buffer was quickly filled until full. This causes increasing delay and packet drop. Then packets in queues was decreased and increment slowly. This indicates packet loss was detected under TCP RENO, transfer speed reduced. While in part 3, despite queue sizes, the packets in queue after 10 second are around 10. Since BBR measures network bandwidth and RTT, after starting transmissing for a few second, it detects increasing of RTT and reduces transmission rate to maxmize bandwidth.
+
+  4. BBR helps mitigate bufferbloat but can't entirely prevent a router from accepting incoming packets until the buffer is full. Since BBR does not react to congestion and data loss, it might cause large data loss in some situations.
+  
