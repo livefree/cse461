@@ -88,9 +88,6 @@ class BBTopo(Topo):
 
         self.addLink(host2, switch, **linkopts)
 
-        #self.addLink(host1, switch, bw=1000, use_htb=True) # 1Gbps
-        #self.addLink(host2, switch, bw=1.5,  delay='10ms', max_queue_size=100, use_htb=True) #RTT=20 ms, buffer size 100
-
 # Simple wrappers around monitoring utilities.  You are welcome to
 # contribute neatly written (using classes) monitoring scripts for
 # Mininet!
@@ -106,9 +103,7 @@ def start_iperf(net):
 
     # TODO: Start the iperf client on h1.  Ensure that you create a
     # long lived TCP flow.
-    # client = ... 
     client = h1.popen("iperf -c %s -t %s > %s/iperf.out" % (h2.IP(), args.time, args.dir), shell=True)
-    # client = h1.popen("iperf -c %s -t 3600 -i 1 -w 16m" % h2.IP())  # run iperf for 3600 sec
 
 def start_qmon(iface, interval_sec=0.1, outfile="q.txt"):
     monitor = Process(target=monitor_qlen,
@@ -126,11 +121,10 @@ def start_ping(net):
     # i.e. ping ... > /path/to/ping.
     h1 = net.get('h1')
     h2 = net.get('h2')
-    # outfile = 'ping.txt'
+    
     print("Start ping...")
     popen = h1.popen("ping -i 0.1 %s > %s/ping.txt"%(h2.IP(), args.dir), shell=True)
 
-    # return ping
 
 def start_webserver(net):
     h1 = net.get('h1')
